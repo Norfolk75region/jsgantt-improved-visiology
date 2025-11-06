@@ -1,112 +1,169 @@
-/* === Общие настройки тёмной темы === */
-div.gantt {
-  font-family: 'Open Sans', Tahoma, Arial, Verdana, sans-serif;
-  font-size: 12px;
-  color: #E0E0E0;
-  background-color: #FF18324B; /* основной фон */
+/* === Подключаем шрифт Open Sans === */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+/* === Базовые стили === */
+body,
+.gantt, 
+.gantt-table, 
+.gantt-table td, 
+.gantt-table th,
+.gantt-chart {
+    font-family: 'Open Sans', sans-serif !important;
 }
 
-/* === Заголовки и ячейки === */
-.gtaskheading,
-.gmajorheading,
-.gminorheading,
-.gminorheadingwkend,
-.gtaskcell,
-.gtaskcellcurrent,
-.gtaskcellwkend {
-  background-color: #1F2A3A;
-  color: #E0E0E0;
-  border-color: #2A3B4F;
+/* === Тёмная тема для диаграммы Ганта === */
+.gantt {
+    background-color: #18324B !important;
+    color: #E0E6ED !important;
 }
 
-/* === Цветные задачи с градиентами === */
-.gtaskblue {
-  background: linear-gradient(to bottom, rgba(58, 132, 195, 1) 0%, rgba(65, 154, 214, 1) 20%, rgba(75, 184, 240, 1) 40%, rgba(58, 139, 194, 1) 70%, rgba(38, 85, 139, 1) 100%);
-  opacity: 1;
-}
-.gtaskred {
-  background: linear-gradient(to bottom, rgba(196, 58, 58, 1) 0%, rgba(211, 65, 65, 1) 20%, rgba(239, 76, 76, 1) 40%, rgba(196, 58, 58, 1) 70%, rgba(135, 37, 37, 1) 100%);
-  opacity: 1;
-}
-.gtaskgreen {
-  background: linear-gradient(to bottom, rgba(80, 193, 58, 1) 0%, rgba(88, 209, 64, 1) 20%, rgba(102, 237, 75, 1) 40%, rgba(80, 193, 58, 1) 70%, rgba(53, 132, 37, 1) 100%);
-  opacity: 1;
-}
-.gtaskyellow {
-  background: linear-gradient(to bottom, rgba(247, 228, 56, 1) 0%, rgba(239, 239, 55, 1) 20%, rgba(255, 255, 58, 1) 40%, rgba(242, 236, 55, 1) 70%, rgba(241, 218, 54, 1) 100%);
-  opacity: 1;
-}
-.gtaskpurple {
-  background: linear-gradient(to bottom, rgba(193, 58, 193, 1) 0%, rgba(211, 65, 211, 1) 20%, rgba(239, 76, 239, 1) 40%, rgba(193, 58, 193, 1) 70%, rgba(137, 38, 137, 1) 100%);
-  opacity: 1;
-}
-.gtaskpink {
-  background: linear-gradient(to bottom, rgba(249, 177, 245, 1) 0%, rgba(247, 192, 243, 1) 20%, rgba(247, 202, 244, 1) 40%, rgba(249, 192, 246, 1) 70%, rgba(252, 174, 247, 1) 100%);
-  opacity: 1;
+/* Таблица задач */
+.gantt .gantt-table {
+    background-color: transparent;
+    color: #E0E6ED;
+    border-collapse: collapse;
 }
 
-/* === Прогресс задачи === */
-.gtaskbluecomplete,
-.gtaskredcomplete,
-.gtaskgreencomplete,
-.gtaskyellowcomplete,
-.gtaskpurplecomplete,
-.gtaskpinkcomplete {
-  background-color: #000000;
-  opacity: 0.6;
+.gantt .gantt-table th {
+    background-color: #1E3B57;
+    color: #FFFFFF;
+    border: 1px solid #2B4A66;
+    font-weight: 600;
+    text-align: left;
+    padding: 6px 8px;
 }
 
-/* === Линия сегодняшнего дня === */
+.gantt .gantt-table td {
+    background-color: #203C59;
+    color: #D1D9E6;
+    border: 1px solid #2B4A66;
+    padding: 6px 8px;
+}
+
+/* Чередование строк */
+.gantt .gantt-row-even {
+    background-color: #1D3650 !important;
+}
+
+.gantt .gantt-row-odd {
+    background-color: #203C59 !important;
+}
+
+/* Задачи */
+.gantt .gantt-task {
+    background-color: #3C7DD9 !important;
+    border: 1px solid #2A5CA8;
+    border-radius: 2px;
+}
+
+.gantt .gantt-taskgroup {
+    background-color: #2A5CA8 !important;
+    border: 1px solid #1E4680;
+}
+
+/* Заголовки и сетка */
+.gantt .gantt-grid-head, 
+.gantt .gantt-grid-body {
+    background-color: #18324B !important;
+}
+
+/* Линии зависимостей */
+.gantt .gantt-dependency-line {
+    stroke: #9BBDF9 !important;
+}
+
+/* Подсказки */
+.gantt .gantt-tooltip {
+    background-color: #2A4E72 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #507AAE;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+/* Скроллбар */
+.gantt::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.gantt::-webkit-scrollbar-thumb {
+    background-color: #3A5C7C;
+    border-radius: 4px;
+}
+
+.gantt::-webkit-scrollbar-track {
+    background-color: #1B3147;
+}
+
+/* Общие улучшения читаемости */
+.gantt .gantt-caption,
+.gantt .gantt-label {
+    color: #E0E6ED !important;
+}
+
+.gantt .gantt-hint {
+    color: #A5B8CE !important;
+}
+
+.gantt .gantt-vline,
+.gantt .gantt-hline {
+    stroke: #2B4A66 !important;
+}
+
 .ganttTodayMarker,
-.gtaskTodayLine {
+.gtaskTodayLine,
+.gCurDate {
   position: absolute;
   width: 2px;
-  background-color: #00bcd4;
-  box-shadow: 0 0 6px #00bcd4;
+  background-color: #ff1744;
+  box-shadow: 0 0 6px #ff1744;
   opacity: 0.9;
   z-index: 30;
 }
 
-/* === Подсветка выбранной задачи === */
-.gitemhighlight td {
-  background-color: rgba(255, 255, 255, 0.1);
+.gtaskblue {
+  background: rgb(58, 132, 195);
+  /* Old browsers */
+  background: linear-gradient(to bottom, rgba(58, 132, 195, 1) 0%, rgba(65, 154, 214, 1) 20%, rgba(75, 184, 240, 1) 40%, rgba(58, 139, 194, 1) 70%, rgba(38, 85, 139, 1) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4bb8f0', endColorstr='#3a84c3', GradientType=0);
+  /* IE6-9 */
+  opacity: 1;
 }
 
-/* === Лист задач === */
-.gtasktable,
-.gcharttable,
-.gchartgrid,
-.glistgrid {
-  background-color: #1F2A3A;
-  color: #E0E0E0;
-  border-color: #2A3B4F;
+.gtaskred {
+  background: rgb(196, 58, 58);
+  background: linear-gradient(to bottom, rgba(196, 58, 58, 1) 0%, rgba(211, 65, 65, 1) 20%, rgba(239, 76, 76, 1) 40%, rgba(196, 58, 58, 1) 70%, rgba(135, 37, 37, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ef4c4c', endColorstr='#c43a3a', GradientType=0);
+  opacity: 1;
 }
 
-/* === Текст внутри задач === */
-.gtaskname div,
-.gname div,
-.gres div,
-.gdur div,
-.gcomp div,
-.gstartdate div,
-.gplanstartdate div,
-.gplanenddate div,
-.gcost div,
-.genddate div {
-  color: #E0E0E0;
+.gtaskgreen {
+  background: rgb(80, 193, 58);
+  background: linear-gradient(to bottom, rgba(80, 193, 58, 1) 0%, rgba(88, 209, 64, 1) 20%, rgba(102, 237, 75, 1) 40%, rgba(80, 193, 58, 1) 70%, rgba(53, 132, 37, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66ED4B', endColorstr='#50c13a', GradientType=0);
+  opacity: 1;
 }
 
-/* === Tooltip === */
-.JSGanttToolTipcont,
-.gTaskInfo {
-  background-color: #2A3B4F;
-  color: #E0E0E0;
-  border-color: #555;
+.gtaskyellow {
+  background: rgb(247, 228, 56);
+  background: linear-gradient(to bottom, rgba(247, 228, 56, 1) 0%, rgba(239, 239, 55, 1) 20%, rgba(255, 255, 58, 1) 40%, rgba(242, 236, 55, 1) 70%, rgba(241, 218, 54, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffff3a', endColorstr='#f7e438', GradientType=0);
+  opacity: 1;
 }
 
-/* === Дополнительные стили для контрастного вида границ === */
-.gtaskcell,
-.gtaskcellcurrent,
-.gtaskcellwkend {
-  border-color: #2A3B4F;
+.gtaskpurple {
+  background: rgb(193, 58, 193);
+  background: linear-gradient(to bottom, rgba(193, 58, 193, 1) 0%, rgba(211, 65, 211, 1) 20%, rgba(239, 76, 239, 1) 40%, rgba(193, 58, 193, 1) 70%, rgba(137, 38, 137, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ef4cef', endColorstr='#892689', GradientType=0);
+  opacity: 1;
+}
+
+.gtaskpink {
+  background: rgb(249, 177, 245);
+  background: linear-gradient(to bottom, rgba(249, 177, 245, 1) 0%, rgba(247, 192, 243, 1) 20%, rgba(247, 202, 244, 1) 40%, rgba(249, 192, 246, 1) 70%, rgba(252, 174, 247, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7caf4', endColorstr='#fcaef7', GradientType=0);
+  opacity: 1;
 }
