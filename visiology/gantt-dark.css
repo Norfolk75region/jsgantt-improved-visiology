@@ -117,8 +117,8 @@ body,
 .gCurDate {
   position: absolute;
   width: 2px;
-  background-color: #00bcd4;
-  box-shadow: 0 0 6px #00bcd4;
+  background-color: #d40000;
+  box-shadow: 0 0 6px #d40063;
   opacity: 0.9;
   z-index: 30;
 }
