@@ -111,3 +111,14 @@ body,
 .gantt .gantt-hline {
     stroke: #2B4A66 !important;
 }
+
+.ganttTodayMarker,
+.gtaskTodayLine,
+.gCurDate {
+  position: absolute;
+  width: 2px;
+  background-color: #00bcd4;
+  box-shadow: 0 0 6px #00bcd4;
+  opacity: 0.9;
+  z-index: 30;
+}
