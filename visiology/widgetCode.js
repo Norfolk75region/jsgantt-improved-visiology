@@ -1,4 +1,5 @@
 /* 
+    Код виджета диаграммы Ганта для Visiology
     Виджет для создания диаграммы Ганта, основан на библиотеке https://jsganttimproved.github.io/jsgantt-improved/
     Полная документация - https://github.com/jsGanttImproved/jsgantt-improved/blob/master/Documentation.md
     jsgantt.js — основная логика
@@ -380,3 +381,4 @@ function addTasks(data, parentId = 0, levelName = '') {
   isLoaded: function () {
     return loadedPromise;
   }
+});
