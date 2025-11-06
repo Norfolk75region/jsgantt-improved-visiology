@@ -1,113 +1,1031 @@
-/* === Подключаем шрифт Open Sans === */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+/* ------------------------------------------------------------
+   Sample CSS for jsGanttImproved v1.8.0 — с комментариями
+   Комментарии на русском объясняют назначение групп правил.
+   ------------------------------------------------------------ */
 
-/* === Базовые стили === */
-body,
-.gantt, 
-.gantt-table, 
-.gantt-table td, 
-.gantt-table th,
-.gantt-chart {
-    font-family: 'Open Sans', sans-serif !important;
+/* === Общие стили контейнера === */
+/* Базовые шрифты и цвет по умолчанию для всего виджета Ганта */
+div.gantt {
+  font-family: tahoma, arial, verdana, Sans-serif;
+  font-size: 12px;
+  color: #656565;
 }
 
-/* === Тёмная тема для диаграммы Ганта === */
+/* Таблицы: убрать двойные границы и упростить верстку */
+.gantt table {
+  border-collapse: collapse;
+}
+
+/* Ячейки таблицы: убрать внутренние отступы — все padding задаётся более локально */
+.gantt td {
+  padding: 0px;
+}
+
+/* === Заголовки и мелкие элементы сетки === */
+/* Специальный маленький шрифт для выходных/мелких элементов */
+.headweekends div {
+  font-size: 8px;
+  width: 100% !important;
+  margin: 0;
+}
+
+/* Универсальные высоты/границы для заголовков и ячеек временной сетки.
+   Здесь объединены классы, которые должны иметь одинаковую высоту/стиль. */
+.gmajorheading,
+.gminorheading,
+.gminorheadingwkend,
+.gtaskcell,
+.gtaskcellcurrent,
+.gtaskcellwkend {
+  height: 19px;
+  font-size: 12px;
+  border: #efefef 1px solid;
+  text-align: center;
+  cursor: default;
+}
+
+/* Сторона со списком задач: фиксированная минимальная ширина (для LC / list column) */
+.gtasklist {
+  height: 19px;
+  min-width: 5px;
+  max-width: 5px;
+  width: 5px;
+  border: #efefef 1px solid;
+  border-right: none;
+}
+
+/* Надпись для случая когда список задач отсутствует */
+.gtasknolist-label {
+  padding: 10px 50px;
+}
+/* Примечание: три значения ширины (min/max/width) помогают корректной работе скриптов ресайза */
+
+/* === Заголовки списков и стили ячеек === */
+.gtaskheading,
+.gmajorheading,
+.gminorheading {
+  background-color: #ffffff;
+  font-weight: bold;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* Стиль ячеек выходных дней и текущей даты — светлый фон, меньший шрифт */
+.gtaskcellwkend,
+.gtaskcellcurrent,
+.gminorheadingwkend {
+  background-color: #f7f7f7;
+  font-weight: bold;
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+/* Акцент для текущей ячейки (выделение текущего дня/колонки) */
+.gtaskcellcurrent {
+  background-color: #e1e0f7;
+}
+
+/* Для некоторых td явно левое выравнивание текста */
+td.gtaskcell {
+  text-align: left;
+}
+
+/* Убираем вертикальные границы для спанящих ячеек (например, объединённые колонки) */
+td.gspanning {
+  border-left: none;
+  border-right: none;
+}
+
+/* Контейнер внутри ячейки (позволяет позиционировать элементы внутри) */
+.gtaskcelldiv {
+  position: relative;
+}
+
+/* === Список задач (левая панель) === */
+/* Универсальные высоты и поведение обрезки текста (ellipsis) */
+.gtaskheading,
+.gname,
+.gtaskname,
+.gres,
+.gdur,
+.gcomp,
+.gstartdate,
+.gplanstartdate,
+.gplanenddate,
+.gcost,
+.genddate {
+  height: 18px;
+  white-space: nowrap;
+  border: #efefef 1px solid;
+}
+
+/* Вложенные div-ы: обрезать длинные строки и показывать '...' */
+.gtaskheading div,
+.gname div,
+.gtaskname div,
+.gres div,
+.gdur div,
+.gcomp div,
+.gstartdate div,
+.gplanstartdate div,
+.gplanenddate div,
+.gcost div,
+.genddate div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* === План (псевдо-фон для планируемых задач) === */
+/* Контейнер плановой полосы — позиционирование абсолютом и полупрозрачность */
+.gtaskbarcontainer.gplan {
+  position: absolute !important;
+  top: 0px;
+  opacity: 0.3;
+  background: white;
+  z-index: 10000;
+  border: 1px solid black;
+}
+
+/* === Форматирование дат — фиксированная ширина для предотвращения сдвига колонок === */
+/* Задаёт одинаковую ширину столбцов дат (нужно для IE8 и общей стабильности) */
+.gstartdate div,
+.gplanstartdate,
+.gplanenddate,
+.gstartdate,
+.genddate {
+  text-align: center;
+  min-width: 105px;
+  width: 105px;
+  max-width: 105px;
+  font-size: 10px;
+}
+
+/* Заголовок задачи — по центру */
+.gtaskheading {
+  text-align: center;
+}
+
+/* Имя задачи: диапазон ширины, обрезка, стиль */
+.gtaskname div,
+.gtaskname {
+  min-width: 170px;
+  max-width: 220px;
+  width: 220px;
+  font-size: 12px;
+  border-left: none;
+}
+
+/* Текст в заголовке/имени обрезается, если слишком длинный */
+.gtaskheading,
+.gtaskname {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* При редактировании разрешаем overflow (чтобы текст не обрезался) */
+.gtaskname.gtaskeditable div,
+.gtaskname.gtaskeditable {
+  overflow: unset;
+}
+
+/* Селектор/фильтр слева — склоняемся к фиксированной ширине для консистентности */
+.gselector {
+  text-align: left;
+  white-space: nowrap;
+  min-width: 170px;
+  max-width: 170px;
+  width: 170px;
+}
+
+/* Метки формы — кликабельные, имитируют кнопку/чекбокс */
+.gformlabel {
+  position: relative;
+  top: 0px;
+  cursor: pointer;
+  border: #ffffff 1px solid;
+  margin-left: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+/* Hover/selected — подсветка метки */
+span.gformlabel:hover,
+span.gselected {
+  background-color: #dbecff;
+  border: #cccccc 1px solid;
+}
+
+/* Кнопка/иконка раскрытия папки (фолдер) — моноширинный шрифт для выравнивания */
+span.gfoldercollapse {
+  color: #000000;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+  font-family: Courier, "Courier New", monospace;
+}
+
+/* === Таблицы задач и чарта === */
+/* Правая граница и ширина по умолчанию */
+.gtasktableh,
+.gtasktable {
+  border-right: #efefef 1px solid;
+  width: 100%;
+}
+
+/* Объединение правил для chart/task таблиц — фиксированная раскладка помогает рендеру */
+.gcharttableh,
+.gtasktableh,
+.gtasktable,
+.gcharttable {
+  border-collapse: collapse;
+}
+
+.gcharttable,
+.gcharttableh {
+  table-layout: fixed;
+}
+
+.gcharttable {
+  border: #efefef 1px solid;
+}
+
+/* === Различие типов задач (группа, веха, обычная) === */
+.ggroupitem {
+  background-color: #fbfbfb;
+  font-weight: bold;
+}
+
+.gmileitem,
+.glineitem {
+  background-color: #ffffff;
+}
+
+/* === Подсветка строки === */
+.gitemhighlight td {
+  background-image: none;
+  background-color: #fffde5;
+}
+
+/* Различие — визуальная тень/серый фон для отличающихся строк */
+.gitemdifferent td {
+  background-image: none;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* === Капшн (текст на полоске задачи) === */
+/* Позиционирование подписи для вех/групп/обычных — абсолют и маленький шрифт */
+.gmilecaption,
+.ggroupcaption,
+.gcaption {
+  font-weight: normal;
+  font-size: 9px;
+  text-align: left;
+  white-space: nowrap;
+  top: 1px;
+  position: absolute;
+  top: 2px;
+}
+
+.ggroupcaption,
+.gcaption {
+  right: -126px;
+}
+
+/* === Процент выполнения (под-полоска) === */
+/* Shared attributes */
+.gtaskcomplete {
+  float: left;
+  overflow: hidden;
+}
+
+/* Полоса статуса завершённости — малая высота и полупрозрачный фон */
+.gtaskcomplete {
+  height: 5px;
+  background-color: #000000;
+  margin-top: 4px;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
+}
+
+/* === Вехи (milestone) === */
+/* Вехи рисуются треугольниками/ромбом через border trick */
+.gmilestone {
+  font-size: 14px;
+  position: absolute;
+  top: -2px;
+}
+
+.gmdtop {
+  top: 2px;
+  overflow: hidden;
+  width: 0px;
+  height: 0px;
+  border-bottom: 5px solid black;
+  border-left: 5px solid transparent;
+  border-top: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+.gmdbottom {
+  top: 2px;
+  overflow: hidden;
+  width: 0px;
+  height: 0px;
+  border-top: 5px solid black;
+  border-left: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+/* === Полосы задач — общий стиль и вариации по цветам === */
+/* Общий размер полосы и opacity */
+.ggroupblack,
+.gtaskblue,
+.gtaskred,
+.gtaskgreen,
+.gtaskyellow,
+.gtaskpurple,
+.gtaskpink {
+  height: 13px;
+  filter: alpha(opacity=90);
+  opacity: 0.9;
+  margin-top: 1px;
+}
+
+/* Default — чёрная группа (используется, если класс не задан) */
+.ggroupblack {
+  height: 7px;
+  background: #000000;
+  margin-top: 2px;
+}
+
+/* Геометрические «концы» полосы — рисуются треугольниками через border */
+.ggroupblackendpointleft {
+  overflow: hidden;
+  width: 0px;
+  height: 0px;
+  top: 2px;
+  border-top: 4px solid black;
+  border-left: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: 4px solid transparent;
+  float: left;
+}
+
+.ggroupblackendpointright {
+  overflow: hidden;
+  width: 0px;
+  height: 0px;
+  top: 2px;
+  border-top: 4px solid black;
+  border-left: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: 4px solid transparent;
+  float: right;
+}
+
+/* Полоса «завершённой части» — маленькая полоса внутри основной */
+.ggroupblackcomplete {
+  float: left;
+  overflow: hidden;
+  height: 3px;
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+  background-color: #777777;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+/* === Цветные полосы задач (градиенты) === */
+/* Используем современные linear-gradient + fallback RGB + старые фильтры для IE */
+.gtaskblue {
+  background: rgb(58, 132, 195);
+  /* Old browsers */
+  background: linear-gradient(to bottom, rgba(58, 132, 195, 1) 0%, rgba(65, 154, 214, 1) 20%, rgba(75, 184, 240, 1) 40%, rgba(58, 139, 194, 1) 70%, rgba(38, 85, 139, 1) 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4bb8f0', endColorstr='#3a84c3', GradientType=0);
+  /* IE6-9 */
+}
+
+.gtaskred {
+  background: rgb(196, 58, 58);
+  background: linear-gradient(to bottom, rgba(196, 58, 58, 1) 0%, rgba(211, 65, 65, 1) 20%, rgba(239, 76, 76, 1) 40%, rgba(196, 58, 58, 1) 70%, rgba(135, 37, 37, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ef4c4c', endColorstr='#c43a3a', GradientType=0);
+}
+
+.gtaskgreen {
+  background: rgb(80, 193, 58);
+  background: linear-gradient(to bottom, rgba(80, 193, 58, 1) 0%, rgba(88, 209, 64, 1) 20%, rgba(102, 237, 75, 1) 40%, rgba(80, 193, 58, 1) 70%, rgba(53, 132, 37, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#66ED4B', endColorstr='#50c13a', GradientType=0);
+}
+
+.gtaskyellow {
+  background: rgb(247, 228, 56);
+  background: linear-gradient(to bottom, rgba(247, 228, 56, 1) 0%, rgba(239, 239, 55, 1) 20%, rgba(255, 255, 58, 1) 40%, rgba(242, 236, 55, 1) 70%, rgba(241, 218, 54, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffff3a', endColorstr='#f7e438', GradientType=0);
+}
+
+.gtaskpurple {
+  background: rgb(193, 58, 193);
+  background: linear-gradient(to bottom, rgba(193, 58, 193, 1) 0%, rgba(211, 65, 211, 1) 20%, rgba(239, 76, 239, 1) 40%, rgba(193, 58, 193, 1) 70%, rgba(137, 38, 137, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ef4cef', endColorstr='#892689', GradientType=0);
+}
+
+.gtaskpink {
+  background: rgb(249, 177, 245);
+  background: linear-gradient(to bottom, rgba(249, 177, 245, 1) 0%, rgba(247, 192, 243, 1) 20%, rgba(247, 202, 244, 1) 40%, rgba(249, 192, 246, 1) 70%, rgba(252, 174, 247, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7caf4', endColorstr='#fcaef7', GradientType=0);
+}
+
+/* === Полоса завершения для цветных задач (маленькая внутренняя полоса) === */
+.gtaskbluecomplete,
+.gtaskredcomplete,
+.gtaskgreencomplete,
+.gtaskyellowcomplete,
+.gtaskpurplecomplete,
+.gtaskpinkcomplete {
+  float: left;
+  overflow: hidden;
+  height: 5px;
+  filter: alpha(opacity=40);
+  opacity: 0.4;
+  background-color: #000000;
+  margin-top: 4px;
+}
+
+/* === Линии сетки (вертикальные/горизонтальные) === */
+.glinev {
+  border-left: 1px solid;
+  width: 0px;
+}
+
+.glineh {
+  border-top: 1px solid;
+  height: 0px;
+}
+
+/* Цвета для зависимостей между задачами (FS/SS/SF/FF) — тут выделены красным */
+.gDepFS,
+.gDepSS,
+.gDepSF,
+.gDepFF {
+  border-color: #ff0000;
+}
+
+/* Стрелки зависимостей — рисуются через border-трюки */
+.gDepFSArw,
+.gDepSSArw {
+  overflow: hidden;
+  width: 0px;
+  height: 0px;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid #ff0000;
+  border-top: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
+.gDepFFArw,
+.gDepSFArw {
+  overflow: hidden;
+  width: 0px;
+  height: 0px;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top: 4px solid transparent;
+  border-right: 4px solid #ff0000;
+}
+
+/* Текущее дата — синий контур */
+.gCurDate {
+  border-color: #0000ff;
+}
+
+/* Контейнер полос задач (позиционирование абсолютом, базовый z-index) */
+div.gtaskbarcontainer {
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+}
+
+/* Текст на полосе: перенос слов, но не перенос по строкам — компонент подрезает лишнее */
+.textbar {
+  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 40%;
+  display: inline-block;
+}
+
+/* === Всплывающие подсказки (tooltip) === */
+/* Основной контейнер тултипа — абсолют и высокий z-index */
+.JSGanttToolTip {
+  position: absolute;
+  display: block;
+  z-index: 10000;
+}
+
+/* Контент тултипа — фон/шрифт/размер */
+.JSGanttToolTipcont {
+  font-family: tahoma, arial, verdana;
+  font-size: 10px;
+  display: block;
+  background: #ffffff;
+  color: #656565;
+}
+
+/* Стандартный блок информации о задаче внутри тултипа */
+.gTaskInfo {
+  background: #dbecff;
+  width: 400px;
+  border: #656565 1px solid;
+  border-radius: 10px;
+  padding: 4px 6px 4px 6px;
+  float: left;
+}
+
+.gTtTitle {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  color: #404040;
+  margin-left: 4px;
+  margin-bottom: 1em;
+}
+
+.gTaskLabel {
+  font-size: 11px;
+  font-weight: bold;
+  color: #656565;
+  margin-left: 4px;
+}
+
+.gTaskText {
+  position: absolute;
+  left: 90px;
+  padding-top: 1px;
+  font-size: 10px;
+  font-weight: normal;
+  color: #656565;
+}
+
+.gTaskNotes {
+  font-size: 11px;
+  font-weight: normal;
+  color: #323232;
+  padding: 0 15px;
+  display: block;
+}
+
+.gTIn {
+  padding-top: 10px;
+}
+
+/* === Минимальные размеры и контейнеры === */
 .gantt {
-    background-color: #18324B !important;
-    color: #E0E6ED !important;
+  min-width: 632px;
+  /* Комментарий: "2x LC width" — предполагает ширину списка задач, влияет на минимальную ширину графика */
 }
 
-/* Таблица задач */
-.gantt .gantt-table {
-    background-color: transparent;
-    color: #E0E6ED;
-    border-collapse: collapse;
+.gchartcontainer {
+  /* padding-left: 532px; LC width */
+  line-height: 1;
+  /* Overrides inherited CSS (e.g. from Bootstrap) */
+  display: flex;
 }
 
-.gantt .gantt-table th {
-    background-color: #1E3B57;
-    color: #FFFFFF;
-    border: 1px solid #2B4A66;
-    font-weight: 600;
-    text-align: left;
-    padding: 6px 8px;
+.gcontainercol {
+  position: relative;
 }
 
-.gantt .gantt-table td {
-    background-color: #203C59;
-    color: #D1D9E6;
-    border: 1px solid #2B4A66;
-    padding: 6px 8px;
+/* Списковая колонка (левая) — минимальная ширина, белый фон, без overflow */
+.glistgrid {
+  min-width: 132px;
+  /* LC width */
+  float: left;
+  /* LC width */
+  padding-right: 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  background-color: #ffffff;
+  overflow: hidden;
 }
 
-/* Чередование строк */
-.gantt .gantt-row-even {
-    background-color: #1D3650 !important;
+/* Альтернативный блок подписи — похож на glistgrid, но используется иначе */
+.glistlbl {
+  min-width: 132px;
+  /* LC width */
+  float: left;
+  /* LC width */
+  padding-right: 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  background-color: #ffffff;
+  overflow: hidden;
+  flex: none;
 }
 
-.gantt .gantt-row-odd {
-    background-color: #203C59 !important;
+/* Устанавливаем вертикальную раскладку для левой панели и панели чарта */
+.glistlbl,
+.gchartgrid {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Задачи */
-.gantt .gantt-task {
-    background-color: #3C7DD9 !important;
-    border: 1px solid #2A5CA8;
-    border-radius: 2px;
+.glabelfooter {
+  clear: both;
 }
 
-.gantt .gantt-taskgroup {
-    background-color: #2A5CA8 !important;
-    border: 1px solid #1E4680;
+.ggridfooter {
+  clear: both;
 }
 
-/* Заголовки и сетка */
-.gantt .gantt-grid-head, 
-.gantt .gantt-grid-body {
-    background-color: #18324B !important;
+/* Правый паддинг для расчётов прокрутки (плейсхолдер) */
+.rhscrpad {
+  width: 150px;
+  position: absolute;
+  top: 0px;
+  height: 1px;
 }
 
-/* Линии зависимостей */
-.gantt .gantt-dependency-line {
-    stroke: #9BBDF9 !important;
+/* Сетка чарта: флекс + вертикальная прокрутка при переполнении */
+.gchartgrid {
+  padding-right: 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  background-color: #ffffff;
+  position: relative;
+  /* overflow: auto; */
+  overflow: unset;
+  overflow-y: auto;
+  min-height: 0%;
 }
 
-/* Подсказки */
-.gantt .gantt-tooltip {
-    background-color: #2A4E72 !important;
-    color: #FFFFFF !important;
-    border: 1px solid #507AAE;
-    border-radius: 4px;
-    padding: 6px 10px;
-    font-size: 13px;
+.gchartlbl {
+  padding-right: 0px;
+  padding-left: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  flex: none;
 }
 
-/* Скроллбар */
-.gantt::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+/* === Хаки для старых версий Internet Explorer === */
+/* Подчёркнутые свойства с префиксом "_" и "*" предназначены для IE6/7/8 совместимости.
+   Они не влияют на современные браузеры, но оставлены для совместимости. */
+.gantt {
+  _height: 100%;
 }
 
-.gantt::-webkit-scrollbar-thumb {
-    background-color: #3A5C7C;
-    border-radius: 4px;
+/* IE6 фиксированная ширина - закомментировано, но оставлено для исторических причин */
+div .gantt {
+  /* _width: 1064px; ie6 fixed width */
 }
 
-.gantt::-webkit-scrollbar-track {
-    background-color: #1B3147;
+div.gchartlbl,
+div.gchartgrid {
+  /* _width: 532px; */
 }
 
-/* Общие улучшения читаемости */
-.gantt .gantt-caption,
-.gantt .gantt-label {
-    color: #E0E6ED !important;
+div.glistlbl,
+div.glistgrid {
+  *right: 0px;
+  /* ie7 pulls the content too far left with the negative margin */
+  _right: 532px;
+  /* but ie6 fixed width needs this */
+  _margin-left: -532px;
+  /* ie6 fixed width */
+  float: left;
 }
 
-.gantt .gantt-hint {
-    color: #A5B8CE !important;
+div.gchartgrid {
+  *padding-bottom: 20px;
+  *overflow-y: hidden;
 }
 
-.gantt .gantt-vline,
-.gantt .gantt-hline {
-    stroke: #2B4A66 !important;
+/* Предотвращаем изменение ширины столбцов при переполнении текста (IE-хак) */
+td.gmajorheading div {
+  *overflow: hidden;
+}
+
+td.gspanning div {
+  *overflow: hidden;
+}
+
+/* === Border transparency/Chroma filter хак для старых IE === */
+.ggroupblackendpointleft {
+  _border-top: 4px solid black;
+  _border-left: 4px solid pink;
+  _border-bottom: 4px solid pink;
+  _border-right: 4px solid pink;
+  _filter: chroma(color=pink);
+}
+
+.ggroupblackendpointright {
+  _border-top: 4px solid black;
+  _border-left: 4px solid pink;
+  _border-bottom: 4px solid pink;
+  _border-right: 4px solid pink;
+  _filter: chroma(color=pink);
+}
+
+.gmdtop {
+  _border-left: 5px solid pink;
+  _border-top: 5px solid pink;
+  _border-right: 5px solid pink;
+  _filter: chroma(color=pink);
+}
+
+.gmdbottom {
+  _border-left: 5px solid pink;
+  _border-bottom: 5px solid pink;
+  _border-right: 5px solid pink;
+  _filter: chroma(color=pink);
+}
+
+.gDepFSArw,
+.gDepSSArw {
+  _border-bottom: 4px solid pink;
+  _border-top: 4px solid pink;
+  _border-right: 4px solid pink;
+  _filter: chroma(color=pink);
+}
+
+.gDepFFArw,
+.gDepSFArw {
+  _border-bottom: 4px solid pink;
+  _border-left: 4px solid pink;
+  _border-top: 4px solid pink;
+  _filter: chroma(color=pink);
+}
+
+/* Opera old-bug workaround: позиционирование линий */
+.glinediv {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1px;
+}
+
+/* Input table — ограничиваем размеры */
+.gantt-inputtable {
+  max-width: 100%;
+  max-height: 16px;
+}
+
+/* Дополнительные столбцы (cost/res/comp/dur) — выравнивание и фиксированная ширина */
+.gadditional {
+  border: #efefef 1px solid;
+}
+
+.gadditional,
+.gres,
+.gdur,
+.gcomp,
+.gcost {
+  text-align: center;
+  width: 70px;
+  max-width: 70px;
+  min-width: 70px;
+  font-size: 10px;
+}
+
+/* === Печать - @media print === */
+/* Правила, улучшающие печать: скрытие скролла, тултипов, и установка размера страницы */
+@media print {
+  /* Все что может создавать прокрутки — отключаем, чтобы печать прошла корректно */
+  html,
+  .gchartgrid {
+    overflow: unset !important;
+  }
+
+  .glistgrid {
+    float: none !important;
+  }
+
+  /* Скрыть scrollbar для Chrome/Safari/Opera (WebKit) при печати */
+  .gchartcontainer *::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Скрыть scrollbar для IE/Edge/Firefox при печати */
+  .gchartcontainer * {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Скрыть тултип, он не нужен на печати */
+  .JSGanttToolTip {
+    display: none !important;
+  }
+
+  /* Параметры страницы будут подставлены функцией JSGantt.printChart(width,height) */
+  @page {
+    size: ${width}mm ${height}mm;
+  }
+
+  .gchartcontainer {
+    width: ${width}mm;
+  }
+  /* Примечание: выше — шаблонный комментарий. JSGantt.printChart подставит реальные значения */
+}
+
+/* === CSS3 вариант сетки, если используется setUseSingleCell(1) === */
+/* Комментарии: этот блок закомментирован — даёт CSS3-репликацию таблицы через фоновые градиенты.
+   Работает только в современных браузерах; удобно, если хочется убрать реальные <td>. */
+
+/*
+.ggrouphour td,
+.gmilehour td,
+.gitemhour td { background-size: 19px 1px; background-image: linear-gradient(to left, #efefef, transparent 1px, transparent 18px); width: 100%; height: 19px; }
+...
+*/
+
+/* === Основная обёртка и возможность ресайза === */
+.gmain {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  /* Allow resize */
+  resize: horizontal;
+}
+
+/* Правая часть — основная — прокручиваемая */
+.gmainright {
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+/* Левая часть — список задач: занимает место по необходимости, min-width предотвращает сжатие слишком сильно */
+.gmainleft {
+  overflow: hidden;
+  flex: 0 0 20%;
+  min-width: 220px;
+  /* Allow side to grow and shrink */
+  flex: 1 0 auto;
+}
+
+/* Высоты строк — фиксируем для согласованности рендера */
+.gtasktableh tr,
+.gcharttable tr,
+.gcharttableh tr,
+.gtasktable tr {
+  height: 22px !important;
+}
+
+/* Внешний контейнер таблицы задач */
+.gtasktableouterwrapper {
+  overflow: hidden;
+}
+
+/* Обёртка с прокруткой для таблицы — вертикальная прокрутка */
+.gtasktablewrapper {
+  overflow-y: scroll;
+  flex: auto;
+  height: 100%;
+}
+
+/* Сетка чарта — горизонтальная/вертикальная прокрутка при необходимости */
+.chartgrid {
+  overflow: auto;
+  flex: auto;
+}
+
+/* === Опциональные 'printer friendly' правила === */
+/* При печати полосы превращаются в border-top нужного цвета (чтобы выглядеть как заливка) */
+@media print {
+  .ggroupblack {
+    height: 0px;
+    border-top: 7px solid;
+    border-color: #000000;
+  }
+
+  .gtaskblue {
+    height: 0px;
+    border-top: 13px solid;
+    border-color: rgb(58, 132, 195);
+  }
+
+  .gtaskred {
+    height: 0px;
+    border-top: 13px solid;
+    border-color: rgb(196, 58, 58);
+  }
+
+  .gtaskgreen {
+    height: 0px;
+    border-top: 13px solid;
+    border-color: rgb(80, 193, 58);
+  }
+
+  .gtaskyellow {
+    height: 0px;
+    border-top: 13px solid;
+    border-color: rgb(247, 228, 56);
+  }
+
+  .gtaskpurple {
+    height: 0px;
+    border-top: 13px solid;
+    border-color: rgb(193, 58, 193);
+  }
+
+  .gtaskpink {
+    height: 0px;
+    border-top: 13px solid;
+    border-color: rgb(249, 177, 245);
+  }
+
+  .gtaskbluecomplete,
+  .gtaskredcomplete,
+  .gtaskgreencomplete,
+  .gtaskyellowcomplete,
+  .gtaskpurplecomplete,
+  .gtaskpinkcomplete {
+    height: 0px;
+    filter: alpha(opacity=40);
+    opacity: 0.4;
+    margin-top: -9px;
+    border-top: 5px solid;
+    border-color: #000000;
+  }
+
+  .ggroupblackcomplete {
+    height: 0px;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    margin-top: -5px;
+    border-top: 3px solid;
+    border-color: #777777;
+  }
+
+  .gmainright,
+  .gmainleft {
+    overflow: hidden;
+    width: auto;
+  }
+
+  /* Убираем разбиение таблицы между страницами */
+  table {
+    page-break-after: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  td {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tfoot {
+    display: table-footer-group;
+  }
+}
+
+/* === Стили кастомного скроллбара для Mac (WebKit) === */
+/* Улучшает внешний вид при использовании трекпада / скрытых скроллбаров */
+.frame::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.frame::-webkit-scrollbar:vertical {
+  width: 11px;
+}
+
+.frame::-webkit-scrollbar:horizontal {
+  height: 11px;
+}
+
+.frame::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 2px solid white;
+  /* should match background, can't be transparent */
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.frame::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+/* Скрытая прокрутка для вычислений ширины */
+.gscrollbar-calculation-container {
+  visibility: hidden;
+  overflow: scroll;
+  -ms-overflow-style: scrollbar;
+  display: block;
 }
