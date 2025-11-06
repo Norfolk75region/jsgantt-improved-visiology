@@ -1,0 +1,113 @@
+/* === Подключаем шрифт Open Sans === */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+/* === Базовые стили === */
+body,
+.gantt, 
+.gantt-table, 
+.gantt-table td, 
+.gantt-table th,
+.gantt-chart {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+/* === Тёмная тема для диаграммы Ганта === */
+.gantt {
+    background-color: #18324B !important;
+    color: #E0E6ED !important;
+}
+
+/* Таблица задач */
+.gantt .gantt-table {
+    background-color: transparent;
+    color: #E0E6ED;
+    border-collapse: collapse;
+}
+
+.gantt .gantt-table th {
+    background-color: #1E3B57;
+    color: #FFFFFF;
+    border: 1px solid #2B4A66;
+    font-weight: 600;
+    text-align: left;
+    padding: 6px 8px;
+}
+
+.gantt .gantt-table td {
+    background-color: #203C59;
+    color: #D1D9E6;
+    border: 1px solid #2B4A66;
+    padding: 6px 8px;
+}
+
+/* Чередование строк */
+.gantt .gantt-row-even {
+    background-color: #1D3650 !important;
+}
+
+.gantt .gantt-row-odd {
+    background-color: #203C59 !important;
+}
+
+/* Задачи */
+.gantt .gantt-task {
+    background-color: #3C7DD9 !important;
+    border: 1px solid #2A5CA8;
+    border-radius: 2px;
+}
+
+.gantt .gantt-taskgroup {
+    background-color: #2A5CA8 !important;
+    border: 1px solid #1E4680;
+}
+
+/* Заголовки и сетка */
+.gantt .gantt-grid-head, 
+.gantt .gantt-grid-body {
+    background-color: #18324B !important;
+}
+
+/* Линии зависимостей */
+.gantt .gantt-dependency-line {
+    stroke: #9BBDF9 !important;
+}
+
+/* Подсказки */
+.gantt .gantt-tooltip {
+    background-color: #2A4E72 !important;
+    color: #FFFFFF !important;
+    border: 1px solid #507AAE;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+/* Скроллбар */
+.gantt::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.gantt::-webkit-scrollbar-thumb {
+    background-color: #3A5C7C;
+    border-radius: 4px;
+}
+
+.gantt::-webkit-scrollbar-track {
+    background-color: #1B3147;
+}
+
+/* Общие улучшения читаемости */
+.gantt .gantt-caption,
+.gantt .gantt-label {
+    color: #E0E6ED !important;
+}
+
+.gantt .gantt-hint {
+    color: #A5B8CE !important;
+}
+
+.gantt .gantt-vline,
+.gantt .gantt-hline {
+    stroke: #2B4A66 !important;
+}
